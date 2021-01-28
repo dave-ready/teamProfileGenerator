@@ -51,20 +51,8 @@ inquirer
         message:"Enter the Manager's Office Number",
         name:'officeNumber',
     },
-   /*
-      {
-        type: "input",
-        message: "What is your github?",
-        name: "github",
-        when: (response) => response.position === "Engineer",
-    },
-    {
-        type: "input",
-        message: "What is your school?",
-        name: "school",
-        when: (response) => response.position === "Intern",
-    }  */
-    ]);
+   
+    ]).then(({managerName, EmployeeID, managerEmail, officeNumber}))
 
     //Create function to add Employees
 
@@ -154,7 +142,7 @@ inquirer
             .then(({ internName, internID, internEmail, School }) => {
                          this.employees.push(new Engineer(internName, internID, internEmail, school ));
 
-                this.addIntern();
+                this.addEmployee();
             })
     };
 
