@@ -124,6 +124,41 @@ inquirer
             })
     };
 
+    addIntern() {
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: "Enter your Intern's name",
+                    name: 'internName',
+                },
+                {
+                    type: 'input',
+                    message: "What is your Intern's Employee ID",
+                    name: 'engineerID',
+                    
+                },
+                {
+                    type: 'input',
+                    message: "Enter your Intern's Email",
+                    name: 'engineerEmail',
+                    
+                },
+                {
+                    type: 'input',
+                    message: "Enter your Intern's school",
+                    name: 'School',
+                    
+                }
+            ])
+            .then(({ internName, internID, internEmail, School }) => {
+                         this.employees.push(new Engineer(internName, internID, internEmail, school ));
+
+                this.addIntern();
+            })
+    };
+
+
 
 
 
