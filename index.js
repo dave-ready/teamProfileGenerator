@@ -26,40 +26,33 @@ THEN I exit the application, and the HTML is generated
 
 
 //user prompts
-const promptManager = () =>
+const promptUser = () =>
 //use inquirer.prompt to create questions/prompts for user
 inquirer
   .prompt([
       {
         type:'input',
-        message:"Enter the manager's name",
+        message:"Enter the Manager's name",
         name:'managerName',
       },
       
       {
         type:'input',
-        message:"Enter the manager's Employee ID",
+        message:"Enter the Manager's Employee ID",
         name:'managerID',
     },
     {
         type:'input',
-        message:"Enter the manager's Email Address",
+        message:"Enter the Manager's Email Address",
         name:'managerEmail',
     },
     {
         type:'input',
-        message:"Enter the manager's Office Number",
-        name:'managerOfficeNumber',
+        message:"Enter the Manager's Office Number",
+        name:'officeNumber',
     },
-    {
-        type:'list',
-        message:"Would you like to add an engineer or an intern or finish building your team",
-        name:'Position',
-        choices: ['Engineer', 
-                  'Intern',
-                  'Finish building your team']
-    },
-    {
+   /*
+      {
         type: "input",
         message: "What is your github?",
         name: "github",
@@ -70,7 +63,67 @@ inquirer
         message: "What is your school?",
         name: "school",
         when: (response) => response.position === "Intern",
-    }
+    }  */
     ]);
+
+    //Create function to add Employees
+
+    addEmployee() {
+        inquirer
+          .prompt({
+            type:'list',
+            message:"Would you like to add an engineer or an intern or finish building your team",
+            name:'addEmployee',
+            choices: ['Engineer', 
+                      'Intern',
+                      'Finish building your team']
+            }).then((response) => {
+                if (response.addEmployee === 'Engineer') {
+                    this.addEngineer();
+
+                } else if (response.addEmployee === 'Intern') {
+                    this.addIntern();
+
+                } else {
+                    this.writeFile()
+                }
+            })
+    };
+
+    addEngineer() {
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: "Enter your Engineer's name",
+                    name: 'engineerName',
+                },
+                {
+                    type: 'input',
+                    message: "What is your Engineer's Employee ID",
+                    name: 'engineerID',
+                    
+                },
+                {
+                    type: 'input',
+                    message: "Enter your Engineer's Email",
+                    name: 'engineerEmail',
+                    
+                },
+                {
+                    type: 'input',
+                    message: "Enter your Engineer's Github username",
+                    name: 'Github',
+                    
+                }
+            ])
+            .then(({ engineerName, engineerID, engineerEmail, Github }) => {
+                         this.employees.push(new Engineer(engineerName, engineerID, engineerEmail, Github ));
+
+                this.addEmployee();
+            })
+    };
+
+
 
 
