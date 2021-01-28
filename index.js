@@ -7,7 +7,8 @@ const util = require('util');
 const manager = require('./lib/manager');
 const engineer = require('./lib/engineer');
 const intern = require('./lib/intern');
-//const employees = []; 
+const { createInflate } = require('zlib');
+const employees = []; 
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
@@ -52,11 +53,15 @@ inquirer
         name:'officeNumber',
     },
    
-    ]).then(({managerName, EmployeeID, managerEmail, officeNumber}))
+    ]).then(({managerName, managerID, managerEmail, officeNumber}) => {
+        this.employees.push(new Manager (managerName, managerID, managerEmail, officeNumber));
+
+        this.addEmployee();
+    });
 
     //Create function to add Employees
 
-    addEmployee() {
+    const addEmployee = () => 
         inquirer
           .prompt({
             type:'list',
@@ -75,10 +80,10 @@ inquirer
                 } else {
                     this.writeFile()
                 }
-            })
-    };
+            });
+    
 
-    addEngineer() {
+    const addEngineer = () =>
         inquirer
             .prompt([
                 {
@@ -104,15 +109,14 @@ inquirer
                     name: 'Github',
                     
                 }
-            ])
-            .then(({ engineerName, engineerID, engineerEmail, Github }) => {
+            ]).then(({ engineerName, engineerID, engineerEmail, Github }) => {
                          this.employees.push(new Engineer(engineerName, engineerID, engineerEmail, Github ));
 
                 this.addEmployee();
-            })
-    };
+            });
+    
 
-    addIntern() {
+    const addIntern = () =>
         inquirer
             .prompt([
                 {
@@ -143,8 +147,16 @@ inquirer
                          this.employees.push(new Engineer(internName, internID, internEmail, school ));
 
                 this.addEmployee();
-            })
-    };
+            });
+
+
+    const createFile = () =>
+        fs.writeFile('./dist/index.html', generatePage(this.employees), (err) => {
+            if (err) throw err;
+        
+        console.log ("Your Team Profile has been generated!");
+    });
+    
 
 
 
