@@ -7,7 +7,7 @@ const util = require('util');
 const manager = require('./lib/manager');
 const engineer = require('./lib/engineer');
 const intern = require('./lib/intern');
-//const employees = [];
+//const employees = []; 
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
@@ -26,7 +26,7 @@ THEN I exit the application, and the HTML is generated
 
 
 //user prompts
-const promptUser = () =>
+const promptManager = () =>
 //use inquirer.prompt to create questions/prompts for user
 inquirer
   .prompt([
@@ -54,12 +54,23 @@ inquirer
     {
         type:'list',
         message:"Would you like to add an engineer or an intern or finish building your team",
-        name:'Employees',
+        name:'Position',
         choices: ['Engineer', 
                   'Intern',
                   'Finish building your team']
     },
-    
-  ])
+    {
+        type: "input",
+        message: "What is your github?",
+        name: "github",
+        when: (response) => response.position === "Engineer",
+    },
+    {
+        type: "input",
+        message: "What is your school?",
+        name: "school",
+        when: (response) => response.position === "Intern",
+    }
+    ]);
 
 
