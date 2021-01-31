@@ -7,17 +7,20 @@ const util = require('util');
 const manager = require('./lib/manager');
 const engineer = require('./lib/engineer');
 const intern = require('./lib/intern');
-const { createInflate } = require('zlib');
+//const { createInflate } = require('zlib');
 //const employees = []; 
 
 const writeFileAsync = util.promisify(fs.writeFile);
-
+/*
 class Prompts {
     constructor() {
         this.employees = [];
     }
+    */
 
-promptUser() {
+//NEEDS WORK!!!
+
+const promptUser = () =>
 //use inquirer.prompt to create questions/prompts for user
 inquirer
   .prompt([
@@ -41,16 +44,19 @@ inquirer
         type:'input',
         message:"Enter the Manager's Office Number",
         name:'officeNumber',
-    },
+    }
    
-    ])
+    ]);
+//}
+    //promptUser()
+    /*
     
     .then(({managerName, managerID, managerEmail, officeNumber}) => {
         this.employees.push(new Manager (managerName, managerID, managerEmail, officeNumber));
 
         this.addEmployee();
     });
-}
+
 
     //Create function to add Employees
 
@@ -161,5 +167,5 @@ inquirer
 
  module.exports = Prompts;
 
-
+*/
 
