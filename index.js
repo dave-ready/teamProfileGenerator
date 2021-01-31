@@ -8,26 +8,16 @@ const manager = require('./lib/manager');
 const engineer = require('./lib/engineer');
 const intern = require('./lib/intern');
 const { createInflate } = require('zlib');
-const employees = []; 
+//const employees = []; 
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
-/*
-WHEN I start the application
-THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
-WHEN I enter the team manager’s name, employee ID, email address, and office number
-THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
-WHEN I select the engineer option
-THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
-WHEN I select the intern option
-THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
-WHEN I decide to finish building my team
-THEN I exit the application, and the HTML is generated
-*/
+class Prompts {
+    constructor() {
+        this.employees = [];
+    }
 
-
-//user prompts
-const promptUser = () =>
+promptUser() {
 //use inquirer.prompt to create questions/prompts for user
 inquirer
   .prompt([
@@ -53,15 +43,18 @@ inquirer
         name:'officeNumber',
     },
    
-    ]).then(({managerName, managerID, managerEmail, officeNumber}) => {
+    ])
+    
+    .then(({managerName, managerID, managerEmail, officeNumber}) => {
         this.employees.push(new Manager (managerName, managerID, managerEmail, officeNumber));
 
         this.addEmployee();
     });
+}
 
     //Create function to add Employees
 
-    const addEmployee = () => 
+    addEmployee() { 
         inquirer
           .prompt({
             type:'list',
@@ -80,10 +73,12 @@ inquirer
                 } else {
                     this.writeFile()
                 }
-            });
+        });
+
+    }
     
 
-    const addEngineer = () =>
+    addEngineer() {
         inquirer
             .prompt([
                 {
@@ -114,9 +109,11 @@ inquirer
 
                 this.addEmployee();
             });
+
+        }
     
 
-    const addIntern = () =>
+    addIntern() {
         inquirer
             .prompt([
                 {
@@ -149,16 +146,20 @@ inquirer
                 this.addEmployee();
             });
 
+        }
 
-    const createFile = () =>
+
+    createFile() {
         fs.writeFile('./dist/index.html', generatePage(this.employees), (err) => {
             if (err) throw err;
         
         console.log ("Your Team Profile has been generated!");
     });
-    
 
+  }
+}
 
+ module.exports = Prompts;
 
 
 
