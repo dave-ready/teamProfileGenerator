@@ -7,7 +7,7 @@ describe("Employee", () => {
     });
 
     it("Will get the employees name using constructor function", () => {
-        const empName = "Dylan";
+        const empName = "Dave";
         const emp = new Employee(empName);
         expect(emp.name).toBe(empName);
     });
@@ -18,10 +18,30 @@ describe("Employee", () => {
         expect(emp.id).toBe(empID);
     });
 
-    it("Can get email using constructor function", () => {
-        const empEmail = "test@test.com";
+    it("Will get email using constructor function", () => {
+        const empEmail = "test_email@testmail.com";
         const emp = new Employee("Dylan", 25, empEmail);
         expect(emp.email).toBe(empEmail);
     });
+
+    describe("getName", () => {
+        it("Will get name using getName function", () => {
+            const empName = "Dylan";
+            const emp = new Employee(empName);
+            expect(emp.getName()).toBe(empName);
+        });
+    });
+
+    describe("getId", () => {
+        it("Will get id using getId function", () => {
+            const empID = 25;
+            const emp = new Employee("Dylan", empID);
+            expect(emp.getId()).toBe(empID);
+        });
+    });
+
+
+
+});
 
 
