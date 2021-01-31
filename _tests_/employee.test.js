@@ -40,7 +40,21 @@ describe("Employee", () => {
         });
     });
 
-
+    describe("getEmail", () => {
+        it("Will display email using getEmail function", () => {
+            const empEmail = "test_email@testmail.com";
+            const emp = new Employee("Dylan", 25, empEmail);
+            expect(emp.getEmail()).toBe(empEmail);
+        });
+    });
+        
+    describe("getRole", () => {
+        it("Will return 'Employee' using getRole function", () => {
+            const empRole = "Employee";
+            const emp = new Employee("Dylan", 25, "test_email@testmail.com");
+            expect(emp.getRole()).toBe(empRole);
+        });
+    });
 
 });
 
