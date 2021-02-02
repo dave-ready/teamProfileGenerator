@@ -7,15 +7,20 @@ const util = require('util');
 const manager = require('./lib/manager');
 const engineer = require('./lib/engineer');
 const intern = require('./lib/intern');
-//const employees = []; 
+const employees = []; 
 
-const writeFileAsync = util.promisify(fs.writeFile);
+//const writeFileAsync = util.promisify(fs.writeFile);
 /*
 class Prompts {
     constructor() {
         this.employees = [];
     }
     */
+
+function promptUser() {
+    createTemplate();
+    addEmployee();
+}
 
    function addEmployee() { 
     inquirer
@@ -63,14 +68,15 @@ class Prompts {
     inquirer
         .prompt([
             {
+            type: 'input',
             message: `Please enter Employee's ${extraInfo}`,
-            name: "extraInfo"
+            name: 'extraInfo'
             },
             {
-            type: "list",
+            type: 'list',
             message: "Would you like to add any additional employees?",
-            choices: ["yes", "no"],
-            name: "additionalEmployees"
+            choices: ['yes', 'no'],
+            name: 'additionalEmployees'
             }
         
         ])
@@ -80,16 +86,24 @@ class Prompts {
             let newEmployee;
 
             if (memberRole === "Engineer") {
-                newMember = new Engineer(memberName, memberID, memberEmail, extraInfo);
+                newEmployee = new Engineer(memberName, memberID, memberEmail, extraInfo);
 
             } else if (memberRole === "Intern") {
-                newMember = new Intern(memberName, memberID, memberEmail, extraInfo);
+                newEmployee = new Intern(memberName, memberID, memberEmail, extraInfo);
 
             } else if (memberRole === "Manager") {
-                newMember = new Manager(memberName, memberID, memberEmail, extraInfo);
+                newEmployee = new Manager(memberName, memberID, memberEmail, extraInfo);
             };
 
             employees.push(newEmployee);
+            addMemberData(newEmployee)
+            .then(function() {
+                if (additionalEmployees === "yes") {
+                    addEmployee();
+
+                } else {
+                    completeProfile();
+                }
 
             });
             
@@ -123,7 +137,7 @@ function createTemplate() {
             <div class="row">
         `;
 
-    fs.writeFile("./dist/teamProfile.html", html, function(err) {
+    fs.writeFile("./dist/teamProfile.html", teamTemplate, function(err) {
         if (err) {
             console.log(err);
         }
@@ -244,66 +258,16 @@ function completeProfile() {
 
     `;
 
-    fs.appendFile("./dist/teamProfile.html", html, function (err) {
+    fs.appendFile("./dist/teamProfile.html", templateEnd, function (err) {
         if (err) {
             console.log(err);
         };
     });
     console.log("Your team profile has been Generated!");
 }
+promptUser();
 
 
 
 
-
-/*    
-    addIntern() {
-        inquirer
-            .prompt([
-                {
-                    type: 'input',
-                    message: "Enter your Intern's name",
-                    name: 'internName',
-                },
-                {
-                    type: 'input',
-                    message: "What is your Intern's Employee ID",
-                    name: 'engineerID',
-                    
-                },
-                {
-                    type: 'input',
-                    message: "Enter your Intern's Email",
-                    name: 'engineerEmail',
-                    
-                },
-                {
-                    type: 'input',
-                    message: "Enter your Intern's school",
-                    name: 'School',
-                    
-                }
-            ])
-            .then(({ internName, internID, internEmail, School }) => {
-                         this.employees.push(new Engineer(internName, internID, internEmail, school ));
-
-                this.addEmployee();
-            });
-
-        }
-
-
-    createFile() {
-        fs.writeFile('./dist/index.html', generatePage(this.employees), (err) => {
-            if (err) throw err;
-        
-        console.log ("Your Team Profile has been generated!");
-    });
-
-  }
-}
-
- module.exports = Prompts;
-
-*/
 
