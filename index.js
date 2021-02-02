@@ -49,13 +49,13 @@ class Prompts {
 
         let extraInfo = "";
 
-        if (role === "Engineer") {
+        if (memberRole === "Engineer") {
             extraInfo = "GitHub Username";
 
-        } else if (role === "Intern") {
+        } else if (memberRole === "Intern") {
             extraInfo = "School Name";
             
-        } else if (role === "Manager") {
+        } else if (memberRole === "Manager") {
             extraInfo = "Office Number";
         }
 
@@ -79,13 +79,13 @@ class Prompts {
 
             let newEmployee;
 
-            if (role === "Engineer") {
+            if (memberRole === "Engineer") {
                 newMember = new Engineer(memberName, memberID, memberEmail, extraInfo);
 
-            } else if (role === "Intern") {
+            } else if (memberRole === "Intern") {
                 newMember = new Intern(memberName, memberID, memberEmail, extraInfo);
 
-            } else if (role === "Manager") {
+            } else if (memberRole === "Manager") {
                 newMember = new Manager(memberName, memberID, memberEmail, extraInfo);
             };
 
@@ -101,7 +101,8 @@ function createTemplate() {
 
     const teamTemplate = 
     
-    `<!DOCTYPE html>
+    `
+    <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -121,7 +122,7 @@ function createTemplate() {
 
             <div class="row">
             </div>
-            
+
         </div>
         `;
 
@@ -134,103 +135,55 @@ function createTemplate() {
 }
 
 
-/*
 
-        }).then((response) => {
-            if (response.addEmployee === 'Engineer') {
-                this.addEngineer();
+function addMemberData(response) {
+    return new Promise(function() {
 
-            } else if (response.addEmployee === 'Intern') {
-                this.addIntern();
+        const memberName = response.getName();
+        const memberRole = response.getRole();
+        const memberID = response.getId();
+        const memberEmail = response.getEmail();
 
-            } else {
-                this.writeFile()
-            }
-    });
+        let memberData = "";
 
+        if (memberRole === "Engineer") {
+
+            const memberGithub = response.getGithub();
+
+            memberData = 
+
+           `
+            <div class="col-6">
+
+                <div class="card mx-auto mb-3" style="width: 18rem">
+
+                <h5 class="card-header">${memberName}<br /><br />Engineer</h5>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID: ${memberID}</li>
+                    <li class="list-group-item">Email Address: ${memberEmail}</li>
+                    <li class="list-group-item">GitHub: ${memberGithub}</li>
+                </ul>
+
+                </div>
+            </div>
+
+            `;
+
+        } else if (memberRole === "Intern") {
+
+            
+
+        } else if (memberRole === "Manager") {}
+
+    
 }
-*/
-//NEEDS WORK!!!
-
-const promptUser = () =>
-//use inquirer.prompt to create questions/prompts for user
-inquirer
-  .prompt([
-      /*{
-        type:'input',
-        message:"Enter the Manager's name",
-        name:'managerName',
-      },
-      
-      {
-        type:'input',
-        message:"Enter the Manager's Employee ID",
-        name:'managerID',
-    },
-    {
-        type:'input',
-        message:"Enter the Manager's Email Address",
-        name:'managerEmail',
-    },
-    
-    {
-        type:'input',
-        message:"Enter the Manager's Office Number",
-        name:'officeNumber',
-    }
-   
-    ]);
-
-    promptUser()
-    
-    
-    .then(({managerName, managerID, managerEmail, officeNumber}) => {
-        this.employees.push(new Manager (managerName, managerID, managerEmail, officeNumber));
-
-        this.addEmployee();
-    });
 
 
-    //Create function to add Employees
 
-    
-    
 
-    addEngineer() {
-        inquirer
-            .prompt([
-                {
-                    type: 'input',
-                    message: "Enter your Engineer's name",
-                    name: 'engineerName',
-                },
-                {
-                    type: 'input',
-                    message: "What is your Engineer's Employee ID",
-                    name: 'engineerID',
-                    
-                },
-                {
-                    type: 'input',
-                    message: "Enter your Engineer's Email",
-                    name: 'engineerEmail',
-                    
-                },
-                {
-                    type: 'input',
-                    message: "Enter your Engineer's Github username",
-                    name: 'Github',
-                    
-                }
-            ]).then(({ engineerName, engineerID, engineerEmail, Github }) => {
-                         this.employees.push(new Engineer(engineerName, engineerID, engineerEmail, Github ));
 
-                this.addEmployee();
-            });
-
-        }
-    
-
+/*    
     addIntern() {
         inquirer
             .prompt([
