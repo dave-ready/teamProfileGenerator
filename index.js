@@ -121,9 +121,6 @@ function createTemplate() {
         <div class="container">
 
             <div class="row">
-            </div>
-
-        </div>
         `;
 
     fs.writeFile("./dist/teamProfile.html", html, function(err) {
@@ -137,7 +134,7 @@ function createTemplate() {
 
 
 function addMemberData(response) {
-    return new Promise(function() {
+    return new Promise(function(resolve, reject) {
 
         const memberName = response.getName();
         const memberRole = response.getRole();
@@ -209,7 +206,7 @@ function addMemberData(response) {
           <ul class="list-group list-group-flush">
             <li class="list-group-item">ID: ${memberID}</li>
             <li class="list-group-item">Email Address: ${memberEmail}</li>
-            <li class="list-group-item">Office Phone: ${officeNumber}</li>
+            <li class="list-group-item">Office Number: ${officeNumber}</li>
           </ul>
       </div>
     </div>
@@ -232,7 +229,28 @@ function addMemberData(response) {
 
 });
 
-};
+}
+
+function completeProfile() {
+    const templateEnd = 
+    
+    `
+     </div>
+    </div>
+    
+</body>
+
+</html>
+
+    `;
+
+    fs.appendFile("./dist/teamProfile.html", html, function (err) {
+        if (err) {
+            console.log(err);
+        };
+    });
+    console.log("Your team profile has been Generated!");
+}
 
 
 
