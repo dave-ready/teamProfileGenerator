@@ -7,7 +7,6 @@ const util = require('util');
 const manager = require('./lib/manager');
 const engineer = require('./lib/engineer');
 const intern = require('./lib/intern');
-//const { createInflate } = require('zlib');
 //const employees = []; 
 
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -20,13 +19,65 @@ class Prompts {
 
    addEmployee() { 
     inquirer
-      .prompt({
-        type:'list',
-        message:"Would you like to add an engineer or an intern or finish building your team",
-        name:'addEmployee',
-        choices: ['Engineer', 
-                  'Intern',
-                  'Finish building your team']
+      .prompt([
+
+          {
+            type:'input',
+            message:"Please enter the name of the employee you would like to add",
+            name:'memberName',
+          },
+          {
+            type:'list',
+            message:"Please select the role of the employee",
+            name:'memberRole',
+            choices: ['Engineer', 'Manager','Intern'],
+          },
+          {
+            type:'input',
+            message:"Please enter their Employee ID",
+            name:'memberID',
+        },
+        {
+            type:'input',
+            message:"Please enter their Email Address",
+            name:'memberEmail',
+        }
+
+    ])
+
+    .then(function({memberName, memberRole, memberID, memberEmail}) {
+
+        let extraInfo = "";
+
+        if (role === "Engineer") {
+            extraInfo = "GitHub Username";
+
+        } else if (role === "Intern") {
+            extraInfo = "School Name";
+            
+        } else if (role === "Manager") {
+            extraInfo = "Office Number";
+        }
+
+
+    inquirer
+        .prompt([
+            {
+            message: `Please enter Employee's ${extraInfo}`,
+            name: "extraInfo"
+            },
+            {
+            type: "list",
+            message: "Would you like to add any additional employees?",
+            choices: ["yes", "no"],
+            name: "additionalEmployees"
+            }
+        
+        ])
+
+
+/*
+
         }).then((response) => {
             if (response.addEmployee === 'Engineer') {
                 this.addEngineer();
@@ -40,14 +91,14 @@ class Prompts {
     });
 
 }
-
+*/
 //NEEDS WORK!!!
 
 const promptUser = () =>
 //use inquirer.prompt to create questions/prompts for user
 inquirer
   .prompt([
-      {
+      /*{
         type:'input',
         message:"Enter the Manager's name",
         name:'managerName',
@@ -63,6 +114,7 @@ inquirer
         message:"Enter the Manager's Email Address",
         name:'managerEmail',
     },
+    
     {
         type:'input',
         message:"Enter the Manager's Office Number",
