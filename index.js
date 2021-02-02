@@ -172,12 +172,67 @@ function addMemberData(response) {
 
         } else if (memberRole === "Intern") {
 
-            
+            const memberSchool = response.getSchool();
 
-        } else if (memberRole === "Manager") {}
-
+    memberData = 
     
-}
+   `
+    <div class="col-6">
+
+      <div class="card mx-auto mb-3" style="width: 18rem">
+
+        <h5 class="card-header">${memberName}<br /><br />Intern</h5>
+
+          <ul class="list-group list-group-flush">
+             <li class="list-group-item">ID: ${memberID}</li>
+             <li class="list-group-item">Email Address: ${memberEmail}</li>
+             <li class="list-group-item">School: ${memberSchool}</li>
+          </ul>
+
+      </div>
+    </div>
+
+    `;
+
+        } else if (memberRole === "Manager") {
+            const officeNumber = response.getOfficeNumber();
+
+    memberData = 
+
+    `
+    <div class="col-6">
+
+      <div class="card mx-auto mb-3" style="width: 18rem">
+
+        <h5 class="card-header">${memberName}<br /><br />Manager</h5>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: ${memberID}</li>
+            <li class="list-group-item">Email Address: ${memberEmail}</li>
+            <li class="list-group-item">Office Phone: ${officeNumber}</li>
+          </ul>
+      </div>
+    </div>
+    
+    `
+    }
+
+    console.log("Adding team member's information");
+
+    fs.appendFile("./dist/teamProfile.html", memberData, function (err) {
+
+        if (err) {
+
+            return reject(err);
+      };
+
+    return resolve();
+
+    });
+
+});
+
+};
 
 
 
