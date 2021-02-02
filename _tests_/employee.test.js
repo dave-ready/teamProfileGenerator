@@ -6,7 +6,7 @@ describe("Employee", () => {
         expect(typeof(emp)).toBe("object");
     });
 
-    it("Will get the employees name using constructor function", () => {
+    it("Will set the employee's name using constructor function", () => {
         const empName = "Dave";
         const emp = new Employee(empName);
         expect(emp.name).toBe(empName);
@@ -57,5 +57,7 @@ describe("Employee", () => {
     });
 
 });
+
+module.exports = Employee;
 
 

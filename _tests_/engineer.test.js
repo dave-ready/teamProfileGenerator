@@ -1,3 +1,4 @@
+const Employee = require("../lib/Employee");
 const Engineer = require("../lib/Engineer");
 
 describe("Engineer", () => {
@@ -7,7 +8,7 @@ describe("Engineer", () => {
     });
 
 
-    it("Will get Github account using constructor function", () => {
+    it("Will set Github account using constructor function", () => {
         const userGithub = "Test_Github";
         const eng = new Engineer("Dylan", 25, "test_email@testmail.com", userGithub);
         expect(eng.github).toBe(userGithub);

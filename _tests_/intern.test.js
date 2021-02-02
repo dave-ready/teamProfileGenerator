@@ -1,3 +1,4 @@
+const Employee = require("../lib/Employee");
 const Intern = require("../lib/Intern");
 
 describe("Intern", () => {
@@ -7,7 +8,7 @@ describe("Intern", () => {
     });
 
 
-    it("Will get Intern's school using constructor function", () => {
+    it("Will set Intern's school using constructor function", () => {
         const userSchool = "Columbia";
         const int = new Intern("Dylan", 25, "test_email@testmail.com", userSchool);
         expect(int.school).toBe(userSchool);

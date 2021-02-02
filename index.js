@@ -18,6 +18,29 @@ class Prompts {
     }
     */
 
+   addEmployee() { 
+    inquirer
+      .prompt({
+        type:'list',
+        message:"Would you like to add an engineer or an intern or finish building your team",
+        name:'addEmployee',
+        choices: ['Engineer', 
+                  'Intern',
+                  'Finish building your team']
+        }).then((response) => {
+            if (response.addEmployee === 'Engineer') {
+                this.addEngineer();
+
+            } else if (response.addEmployee === 'Intern') {
+                this.addIntern();
+
+            } else {
+                this.writeFile()
+            }
+    });
+
+}
+
 //NEEDS WORK!!!
 
 const promptUser = () =>
@@ -47,9 +70,9 @@ inquirer
     }
    
     ]);
-//}
-    //promptUser()
-    /*
+
+    promptUser()
+    
     
     .then(({managerName, managerID, managerEmail, officeNumber}) => {
         this.employees.push(new Manager (managerName, managerID, managerEmail, officeNumber));
@@ -60,28 +83,7 @@ inquirer
 
     //Create function to add Employees
 
-    addEmployee() { 
-        inquirer
-          .prompt({
-            type:'list',
-            message:"Would you like to add an engineer or an intern or finish building your team",
-            name:'addEmployee',
-            choices: ['Engineer', 
-                      'Intern',
-                      'Finish building your team']
-            }).then((response) => {
-                if (response.addEmployee === 'Engineer') {
-                    this.addEngineer();
-
-                } else if (response.addEmployee === 'Intern') {
-                    this.addIntern();
-
-                } else {
-                    this.writeFile()
-                }
-        });
-
-    }
+    
     
 
     addEngineer() {
