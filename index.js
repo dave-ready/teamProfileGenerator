@@ -11,6 +11,7 @@ const employees = [];
 
 //const writeFileAsync = util.promisify(fs.writeFile);
 /*
+
 class Prompts {
     constructor() {
         this.employees = [];
@@ -22,7 +23,7 @@ function promptUser() {
     addEmployee();
 }
 
-   function addEmployee() { 
+function addEmployee() { 
     inquirer
       .prompt([
 
@@ -81,7 +82,7 @@ function promptUser() {
         
         ])
 
-        .then(function({extraInfo, additionalEmployees}) {
+        .then(function({extraInfo, additionalEmployees, memberRole}) {
 
             let newEmployee;
 
