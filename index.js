@@ -89,7 +89,7 @@ function addEmployee() {
        // if user no longer wants to add any members, run the completeProfile() function
         .then(function({extraInfo, additionalEmployees, memberRole}) {
 
-            let newEmployee;
+            let newEmployee = "";
 
             if (memberRole === "Engineer") {
                 newEmployee = new Engineer(memberName, memberID, memberEmail, extraInfo);
@@ -154,19 +154,19 @@ function createTemplate() {
 
 
 
-function addMemberData(response) {
-    return new Promise(function(err) {
+function addMemberData() {
+    return new Promise(function(resolve, reject) {
 
-        const memberName = response.getName();
-        const memberRole = response.getRole();
-        const memberID = response.getId();
-        const memberEmail = response.getEmail();
+        const memberName = this.memberName;
+        const memberRole = this.memberRole;
+        const memberID = this.memberID;
+        const memberEmail = this.memberEmail;
 
         let memberData = "";
 
         if (memberRole === "Engineer") {
 
-            const memberGithub = response.getGithub();
+            const memberGithub = this.memberGithub;
 
             memberData = 
 
@@ -190,7 +190,7 @@ function addMemberData(response) {
 
         } else if (memberRole === "Intern") {
 
-            const memberSchool = response.getSchool();
+            const memberSchool = this.memberSchool;
 
     memberData = 
     
@@ -213,7 +213,7 @@ function addMemberData(response) {
     `;
 
         } else if (memberRole === "Manager") {
-            const officeNumber = response.getOfficeNumber();
+            const officeNumber = this.officeNumber();
 
     memberData = 
 
@@ -240,8 +240,9 @@ function addMemberData(response) {
     fs.appendFile("./dist/teamProfile.html", memberData, function (err) {
 
         if (err) {
-            console.log(err);
-        }
+            return reject(err);
+        };
+        return resolve();
 
     });
 
