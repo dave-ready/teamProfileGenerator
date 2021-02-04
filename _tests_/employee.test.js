@@ -12,13 +12,13 @@ describe("Employee", () => {
         expect(emp.name).toBe(empName);
     });
 
-    it("Will get the employee id using constructor function", () => {
+    it("Will set the employee id using constructor function", () => {
         const empID = 25;
         const emp = new Employee("Dylan", empID);
         expect(emp.id).toBe(empID);
     });
 
-    it("Will get email using constructor function", () => {
+    it("Will set email using constructor function", () => {
         const empEmail = "test_email@testmail.com";
         const emp = new Employee("Dylan", 25, empEmail);
         expect(emp.email).toBe(empEmail);

@@ -34,6 +34,8 @@ describe("getSchool", () => {
         
 });
 
+module.exports = Intern;
+
 
 
 

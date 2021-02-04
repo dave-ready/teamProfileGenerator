@@ -4,6 +4,7 @@ const inquirer = require('inquirer');
 const jest = require('jest');
 const fs = require('fs');
 const util = require('util');
+const employee = require('./lib/employee');
 const manager = require('./lib/manager');
 const engineer = require('./lib/engineer');
 const intern = require('./lib/intern');
@@ -17,12 +18,13 @@ class Prompts {
         this.employees = [];
     }
     */
-
+//create function to initialize the application
 function promptUser() {
     createTemplate();
     addEmployee();
 }
 
+//create function to prompt user for info on team members
 function addEmployee() { 
     inquirer
       .prompt([
@@ -50,7 +52,8 @@ function addEmployee() {
         }
 
     ])
-
+     // then prompt user for extra info based on team member's role.
+     // if/else statement to determine the extra info for each role
     .then(function({memberName, memberRole, memberID, memberEmail}) {
 
         let extraInfo = "";
@@ -81,7 +84,9 @@ function addEmployee() {
             }
         
         ])
-
+       // Once all information is determined, push the new employee to the 'employees' array
+       // if user would like to add another employee, run the addEmployee() function
+       // if user no longer wants to add any members, run the completeProfile() function
         .then(function({extraInfo, additionalEmployees, memberRole}) {
 
             let newEmployee;
@@ -94,7 +99,7 @@ function addEmployee() {
 
             } else if (memberRole === "Manager") {
                 newEmployee = new Manager(memberName, memberID, memberEmail, extraInfo);
-            };
+            }
 
             employees.push(newEmployee);
             addMemberData(newEmployee)
@@ -112,6 +117,7 @@ function addEmployee() {
     });
 }
 
+//create function to start the html template for the team profile 
 function createTemplate() {
 
     const teamTemplate = 
@@ -137,7 +143,7 @@ function createTemplate() {
 
             <div class="row">
         `;
-
+    //write it to the generated html profile 
     fs.writeFile("./dist/teamProfile.html", teamTemplate, function(err) {
         if (err) {
             console.log(err);
@@ -149,7 +155,7 @@ function createTemplate() {
 
 
 function addMemberData(response) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function(err) {
 
         const memberName = response.getName();
         const memberRole = response.getRole();
@@ -234,11 +240,8 @@ function addMemberData(response) {
     fs.appendFile("./dist/teamProfile.html", memberData, function (err) {
 
         if (err) {
-
-            return reject(err);
-      };
-
-    return resolve();
+            console.log(err);
+        }
 
     });
 

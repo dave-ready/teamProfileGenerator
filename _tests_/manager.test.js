@@ -35,7 +35,7 @@ describe("getOfficeNumber", () => {
 });
 
 
-
+module.exports = Manager;
 
 
   
